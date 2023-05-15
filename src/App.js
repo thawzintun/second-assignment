@@ -23,15 +23,6 @@ function App() {
     // Destructure State
     const { todos, input, searchKey } = state;
 
-    // API Fetch
-    const TodoFetch = async () => {
-        const response = await fetch(
-            "https://jsonplaceholder.typicode.com/todos/" + searchKey
-        );
-        const data = await response.json();
-        dispatch({ type: "todo", payload: data });
-    };
-
     // Form Submit
     const searchHandler = (e) => {
         e.preventDefault();
@@ -40,7 +31,10 @@ function App() {
 
     // API Fetch useEffect
     useEffect(() => {
-        TodoFetch();
+        // API Fetch
+        fetch("https://jsonplaceholder.typicode.com/todos/" + searchKey)
+            .then((res) => res.json())
+            .then((data) => dispatch({ type: "todo", payload: data }));
     }, [searchKey]);
 
     return (
